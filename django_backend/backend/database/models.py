@@ -10,34 +10,35 @@ import datetime
 
 class EntryData(models.Model):
     patient = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="entry_data")
-    timestamp = models.DateField(default=datetime.date.today().strftime("%d-%m-%Y"))
-    has_disease = models.BooleanField()
-    disease = models.TextField()
-    height = models.IntegerField()
-    weight = models.IntegerField()
-    has_medication = models.BooleanField()
-    medication = models.TextField()
-    is_flu_vaccined = models.BooleanField() # Im Zeitraum von Okt19 bis heute
+    timestamp = models.DateField(default=datetime.date.today().strftime("%Y-%m-%d"))
+    hasDisease = models.BooleanField(null=True)
+    disease = models.TextField(null=True)
+    height = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True)
+    hasMedication = models.BooleanField(null=True)
+    medication = models.TextField(null=True)
+    isFluVaccined = models.BooleanField(null=True) # Im Zeitraum von Okt19 bis heute
     age = models.IntegerField(null=True)
-    gender = models.IntegerField(choices=(("1","male"),("2","female"),("3","divers")))
+    gender = models.CharField(choices=(("male","male"),("female","female"),("divers","divers")),max_length=20)
 
 
 class DailyData(models.Model):
     patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="daily_data")
-    timestamp = models.DateField(default=datetime.date.today().strftime("%d-%m-%Y"))
-    is_covid_positive = models.BooleanField()
-    temperature = models.FloatField()
-    has_chills = models.BooleanField()
-    is_feeling_weak = models.BooleanField()
-    has_body_aches = models.BooleanField()
-    has_continous_cough = models.BooleanField()
-    has_sniff = models.BooleanField()
-    has_diarrhea = models.BooleanField()
-    has_throat_pain = models.BooleanField()
-    has_headache = models.BooleanField()
-    is_easier_out_of_breath = models.BooleanField()
-    was_riskzone_last_two_weeks = models.BooleanField()
-    had_contact_last_two_weeks = models.BooleanField()
+    timestamp = models.DateField(default=datetime.date.today().strftime("%Y-%m-%d"))
+    isCovidPositive = models.BooleanField(null=True)
+    temperature = models.FloatField(null=True)
+    hasChills = models.BooleanField(null=True)
+    isFeelingWeak = models.BooleanField(null=True)
+    hasBodyAches = models.BooleanField(null=True)
+    generalFeeling = models.CharField(choices=(('critical','critical'),('bad','bad'),('normal','normal'),('good','good')),max_length=20,null=True)
+    cough = models.CharField(choices=(('dry','dry'),('produtive','productive'),('none','none')),max_length=20,null=True)
+    hasSniff = models.BooleanField(null=True)
+    hasDiarrhea = models.BooleanField(null=True)
+    hasThroatPain = models.BooleanField(null=True)
+    hasHeadache = models.BooleanField(null=True)
+    isEasierOutOfBreath = models.BooleanField(null=True)
+    wasRiskzoneLastTwoWeeks = models.BooleanField(null=True)
+    hadContactLastTwoWeeks = models.BooleanField(null=True)
 
 
     

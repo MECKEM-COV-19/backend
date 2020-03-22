@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 from .models import CustomUser
 from database.models import DailyData, EntryData
 
-
+import json 
 
 from django.contrib.auth import authenticate,login,logout
 from django.views.decorators.csrf import csrf_exempt
@@ -25,8 +25,9 @@ from django_expiring_token.authentication import token_expire_handler
 @api_view(["POST"])
 @permission_classes((AllowAny,))
 def user_login(request):
-    username = request.data.get("email")
-    password = request.data.get("password")
+    data = json.loads(request.body)
+    username = data["email"]
+    password = data["password"]
     if username is None or password is None:
         return Response({'error': 'Please provide both email and password'},
                         status=HTTP_400_BAD_REQUEST)
@@ -46,8 +47,9 @@ def user_login(request):
 @csrf_exempt
 @permission_classes((AllowAny,))
 def user_signup(request):
-    username = request.data.get("email")
-    password = request.data.get("password")
+    data = json.loads(request.body)
+    username = data["email"]
+    password = data["password"]
     if username is None or password is None:
         return Response({'error': 'Please provide both email and password'},
                         status=HTTP_400_BAD_REQUEST)
@@ -66,6 +68,7 @@ def user_signup(request):
 @csrf_exempt
 @permission_classes((IsAuthenticated,))
 def user_logout(request):
+    #data = json.loads(request.body)
     username = request.user.username
     request.user.auth_token.delete()
 
