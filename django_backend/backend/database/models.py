@@ -1,15 +1,16 @@
-from djongo import models 
-from django.db import models as django_models
+
+from django.db import models
 from users.models import CustomUser
 import uuid
 
-
+import datetime
 
 
 
 
 class EntryData(models.Model):
-    timestamp = django_models.DateTimeField(auto_now_add=True)
+    patient = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="entry_data")
+    timestamp = models.DateField(default=datetime.date.today().strftime("%d-%m-%Y"))
     has_disease = models.BooleanField()
     disease = models.TextField()
     height = models.IntegerField()
@@ -17,9 +18,13 @@ class EntryData(models.Model):
     has_medication = models.BooleanField()
     medication = models.TextField()
     is_flu_vaccined = models.BooleanField() # Im Zeitraum von Okt19 bis heute
+    age = models.IntegerField(null=True)
+    gender = models.IntegerField(choices=(("1","male"),("2","female"),("3","divers")))
+
 
 class DailyData(models.Model):
-    timestamp = django_models.DateTimeField(auto_now_add=True)
+    patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="daily_data")
+    timestamp = models.DateField(input_formats=['%d-%m-%Y'],default=datetime.date.today().strftime("%d-%m-%Y"))
     is_covid_positive = models.BooleanField()
     temperature = models.FloatField()
     has_chills = models.BooleanField()
@@ -35,17 +40,7 @@ class DailyData(models.Model):
     had_contact_last_two_weeks = models.BooleanField()
 
 
-
-
-
-class Patient(models.Model):
-    patient_user = django_models.ForeignKey(CustomUser, on_delete=django_models.CASCADE, related_name="user_patient")
-    patient_id = models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False,name="Patient ID")
-    entrydata = models.EmbeddedField(model_container=EntryData)
-    dailydata = models.ArrayField(model_container=DailyData)
-    age = models.IntegerField(null=True)
-
-    objects = models.DjongoManager()
+    
 
 
 

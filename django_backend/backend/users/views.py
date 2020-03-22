@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseBadRequest,HttpResponse
 from django.views.decorators.http import require_http_methods
 from .models import CustomUser
-from database.models import Patient, DailyData, EntryData
+from database.models import DailyData, EntryData
 
 
 
@@ -52,13 +52,10 @@ def user_signup(request):
         return Response({'error': 'Please provide both email and password'},
                         status=HTTP_400_BAD_REQUEST)
     user = CustomUser.objects.create_user(username,email=username,password=password)
-    patient = Patient(patient_user=user)
-    patient.save()
     if not user:
         return Response({'error': 'Invalid Credentials'},
                         status=HTTP_404_NOT_FOUND)
     token, _ = ExpiringToken.objects.get_or_create(user=user)
-    is_expired, token = token_expire_handler(token)
     return Response({'token': token.key},
                     status=HTTP_200_OK)
     
