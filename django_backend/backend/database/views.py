@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 
 from django.shortcuts import get_object_or_404, render
@@ -104,6 +105,45 @@ def daily_data(request):
             return Response({'error':'You need to provide date.'},HTTP_400_BAD_REQUEST)
             
 
+
+
+
+@api_view(['POST','GET'])
+@csrf_exempt
+@permission_classes((IsAuthenticated,))
+def entry_data(request):
+    if request.method =="POST":
+        patient = request.user
+        data = json.loads(request.body)
+        entrydata = EntryData.objects.create(patient=patient)
+        if 'hasDisease' in data:
+            entrydata.has_disease = data['hasDisease']
+        if 'disease' in data:
+            entrydata.disease = data['disease']
+        if 'height' in data:
+            entrydata.height = data['height']
+        if 'weight' in data:
+            entrydata.weight = data['weight']
+        if 'hasMedication' in data:
+            entrydata.has_medication = data['hasMedication']
+        if 'medication' in data:
+            entrydata.medication = data['medication']
+        if 'isFluVaccined' in data:
+            entrydata.is_flu_vaccined = data['isFluVaccined']
+        if 'age' in data:
+            entrydata.age = data['age']
+        if 'gender' in data:
+            entrydata.gender = data['gender']
+        entrydata.save()
+        serilized_entrydata = serializers.EntryDataSerializer(entrydata)
+        return Response(serilized_entrydata, HTTP_200_OK)
+
+    if request.method == "GET":
+        patient = request.user
+        data = json.loads(request.body)
+        entrydata = get_object_or_404(EntryData, patient=patient)
+        serilized_entrydata = serializers.EntryDataSerializer(entrydata)
+        return Response(serilized_entrydata, HTTP_200_OK)
 
 
 

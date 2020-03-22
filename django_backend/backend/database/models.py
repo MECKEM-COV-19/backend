@@ -24,7 +24,7 @@ class EntryData(models.Model):
 
 class DailyData(models.Model):
     patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="daily_data")
-    timestamp = models.DateField(input_formats=['%d-%m-%Y'],default=datetime.date.today().strftime("%d-%m-%Y"))
+    timestamp = models.DateField(default=datetime.date.today().strftime("%d-%m-%Y"))
     is_covid_positive = models.BooleanField()
     temperature = models.FloatField()
     has_chills = models.BooleanField()

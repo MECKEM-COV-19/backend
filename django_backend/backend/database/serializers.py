@@ -15,3 +15,8 @@ class DailyDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyData
         exlude = ['patient']
+
+class EntryDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EntryData
+        exclude = ['patient']
