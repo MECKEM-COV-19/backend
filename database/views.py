@@ -70,8 +70,10 @@ def daily_data(request):
             dailydata.isFeelingWeak = data['isFeelingWeak']
         if 'hasBodyAches' in data:
             dailydata.hasBodyAches = data['hasBodyAches']
-        if 'hasContinousCough' in data:
-            dailydata.hasContinousCough = data['hasContinousCough']
+        if 'cough' in data:
+            dailydata.hasContinousCough = data['cough']
+        if 'generalFeeling' in data:
+            dailydata.generalFeeling = data['generalFeeling']
         if 'hasSniff' in data:
             dailydata.hasSniff = data['hasSniff']
         if 'wasRiskzoneLastTwoWeeks' in data:
