@@ -10,17 +10,17 @@ from database.models import EntryData, DailyData
 class PatientType(DjangoObjectType):
     class Meta:
         model = CustomUser
-        description = 'Returns all Patients and their Patient IDs. You can use the Patient Id for further queries'
+        description = 'Returns all Patients and their Patient IDs. You can use the Patient Id for further queries.'
 
 class EntryDataType(DjangoObjectType):
     class Meta:
         model = EntryData
-        description = 'Is the regulary '
+        description = 'Is the data a patient uploads ragulary.'
 
 class DailyDataType(DjangoObjectType):
     class Meta:
         model = DailyData
-        description = ''
+        description = 'Is the data patient enters once and and is unlikely to change in short time.'
 
 class Query(graphene.ObjectType):
     users = graphene.List(PatientType)
@@ -43,7 +43,6 @@ class Query(graphene.ObjectType):
 
     def resolve_patientsWithFever(self,info, **kwargs):
         temp = kwargs.get('temperature')
-        info="hallo123"
         patients = []
         daily = DailyData.objects.filter(temperature__gte=temp)
         for data in daily:
@@ -51,6 +50,12 @@ class Query(graphene.ObjectType):
         return patients
     def resolve_patientsDataOverTime(self, info , **kwargs):
         time = kwargs.get('time')
+        patients = CustomUser.objects.all()
+        return_patients = []
+        for patient in patients:
+            dailydata = DailyData.objects.filter(patient=patient).order_by('check_in')
+
+
 
 
 
