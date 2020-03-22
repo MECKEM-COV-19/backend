@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404
 from users.models import CustomUser
 from database.models import EntryData, DailyData
 
+import datetime
+
 class PatientType(DjangoObjectType):
     class Meta:
         model = CustomUser
@@ -27,6 +29,8 @@ class Query(graphene.ObjectType):
     dailyDataForPatient = graphene.List(DailyDataType, id=graphene.String())
     entryDataForPatient = graphene.Field(EntryDataType, id=graphene.String())
     patientsWithFever = graphene.List(PatientType, temperature=graphene.Float())
+    patientsDataOverHours = graphene.List(PatientType, time=graphene.Int())
+    patientsDataOverDays = graphene.List(PatientType, time=graphene.Int())
 
 
     def resolve_dailyDataForPatient(self,info, **kwargs):
@@ -48,12 +52,36 @@ class Query(graphene.ObjectType):
         for data in daily:
             patients.append(data.patient)
         return patients
-    def resolve_patientsDataOverTime(self, info , **kwargs):
+    def resolve_patientsDataOverHours(self, info , **kwargs):
         time = kwargs.get('time')
         patients = CustomUser.objects.all()
         return_patients = []
         for patient in patients:
-            dailydata = DailyData.objects.filter(patient=patient).order_by('check_in')
+            dailydata = DailyData.objects.filter(patient=patient).order_by('timestamp')
+            if dailydata:
+                date1 = dailydata.first().timestamp
+                date2 = dailydata.last().timestamp
+                if not date1 is date2:
+                    d = date2 - date1
+                    if d.seconds/3600. >= time:
+                        return_patients.append(patient)
+           
+        return return_patients
+    def resolve_patientsDataOverDays(self, info , **kwargs):
+        time = kwargs.get('time')
+        patients = CustomUser.objects.all()
+        return_patients = []
+        for patient in patients:
+            dailydata = DailyData.objects.filter(patient=patient).order_by('timestamp')
+            if dailydata:
+                date1 = dailydata.first().timestamp
+                date2 = dailydata.last().timestamp
+                if not date1 is date2:
+                    d = date2 - date1
+                    if d.days >= time:
+                        return_patients.append(patient)
+           
+        return return_patients
             
 
 
