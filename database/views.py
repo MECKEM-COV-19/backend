@@ -59,7 +59,7 @@ def daily_data(request):
     if request.method == "POST":
         patient = request.user
         data = json.loads(request.body)
-        dailydata , _ = DailyData.objects.get_or_create(patient=patient,timestamp=datetime.date.today().strftime("%Y-%m-%d"))
+        dailydata , _ = DailyData.objects.create(patient=patient)
         if 'isovidPositive' in data:
             dailydata.isCovidPositive = data['isCovidPositive']
         if 'temperature' in data:
