@@ -59,25 +59,25 @@ def daily_data(request):
     if request.method == "POST":
         patient = request.user
         data = json.loads(request.body)
-        dailydata , _ = DailyData.objects.create(patient=patient)
-        if 'isovidPositive' in data:
+        dailydata = DailyData.objects.create(patient=patient)
+        if 'isCovidPositive' in data:
             dailydata.isCovidPositive = data['isCovidPositive']
         if 'temperature' in data:
             dailydata.temperature = data['temperature']
-        if 'hashills' in data:
+        if 'hasChills' in data:
             dailydata.hasChills = data['hasChills']
         if 'isFeelingWeak' in data:
             dailydata.isFeelingWeak = data['isFeelingWeak']
         if 'hasBodyAches' in data:
             dailydata.hasBodyAches = data['hasBodyAches']
         if 'cough' in data:
-            dailydata.hasContinousCough = data['cough']
+            dailydata.cough = data['cough']
         if 'generalFeeling' in data:
             dailydata.generalFeeling = data['generalFeeling']
         if 'hasSniff' in data:
             dailydata.hasSniff = data['hasSniff']
         if 'wasRiskzoneLastTwoWeeks' in data:
-            dailydata.wasRiskzoneLastTwoWeeks = data['wasRiskzoneLasTwoWeeks']
+            dailydata.wasRiskzoneLastTwoWeeks = data['wasRiskzoneLastTwoWeeks']
         if 'hasDiarrhea' in data:
             dailydata.hasDiarrhea = data['hasDiarrhea']
         if 'hasContinousCough' in data:
