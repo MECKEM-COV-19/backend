@@ -22,11 +22,14 @@ class Query(graphene.ObjectType):
     dailyDataForPatient = graphene.List(DailyDataType)
 
 
-    def resolve_dailyDataForPatient(self,info, **kwargs)
+    def resolve_dailyDataForPatient(self,info, **kwargs):
         id= kwargs.get('patientId')
         patient = get_object_or_404(CustomUser,patientId=id)
         dailydata = DailyData.objects.filter(patient=patient)
         return dailydata
+
+    def resolve_entryDataorPatient(self,info,**kwargs):
+        pass
 
     def resolve_users(self, info):
         return CustomUser.objects.all()
