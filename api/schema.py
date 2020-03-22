@@ -54,6 +54,7 @@ class Query(graphene.ObjectType):
         return_patients = []
         for patient in patients:
             dailydata = DailyData.objects.filter(patient=patient).order_by('check_in')
+            
 
 
 

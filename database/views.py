@@ -28,7 +28,7 @@ import json
 
 @api_view(['POST','GET'])
 @csrf_exempt
-@permission_classes((IsAuthenticated,AllowAny,))
+@permission_classes((AllowAny,))
 def patient_data(request):
     if request.method == 'POST':
         patient = request.user
@@ -54,7 +54,7 @@ def patient_data(request):
 
 @api_view(['POST','GET'])
 @csrf_exempt
-@permission_classes((IsAuthenticated,AllowAny,))
+@permission_classes((AllowAny,))
 def daily_data(request):
     if request.method == "POST":
         patient = request.user
@@ -115,7 +115,7 @@ def daily_data(request):
 
 @api_view(['POST','GET'])
 @csrf_exempt
-@permission_classes((IsAuthenticated,AllowAny,))
+@permission_classes((AllowAny,))
 def entry_data(request):
     if request.method =="POST":
         patient = request.user
@@ -154,7 +154,7 @@ def entry_data(request):
 
 @api_view(['GET'])
 @csrf_exempt
-@permission_classes((IsAuthenticated,AllowAny))
+@permission_classes((AllowAny))
 def daily_data_all(request):
     daily = DailyData.objects.filter(patient=request.user)
     if daily:
