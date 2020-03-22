@@ -90,6 +90,9 @@ def daily_data(request):
             dailydata.isEasierOutOfBreath = data['isEasierOutOfBreath']
         if 'hadContactLastTwoWeeks' in data:
             dailydata.hadContactLastTwoWeeks = data['hadContactLastTwoWeeks']
+        if 'breathingPattern' in data:
+            dailydata.breathingPattern = data['breathingPattern']
+            
         dailydata.save()
         serialized_daily = serializers.DailyDataSerializer(dailydata)
         return Response(serialized_daily.data, HTTP_200_OK)

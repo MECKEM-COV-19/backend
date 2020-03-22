@@ -10,7 +10,7 @@ import datetime
 
 class EntryData(models.Model):
     patient = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="entry_data")
-    timestamp = models.DateField(default=datetime.date.today().strftime("%Y-%m-%d"))
+    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
     hasDisease = models.BooleanField(null=True)
     disease = models.TextField(null=True)
     height = models.IntegerField(null=True)
@@ -24,9 +24,10 @@ class EntryData(models.Model):
 
 class DailyData(models.Model):
     patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="daily_data")
-    timestamp = models.DateField(default=datetime.date.today().strftime("%Y-%m-%d"))
+    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
     isCovidPositive = models.BooleanField(null=True)
     temperature = models.FloatField(null=True)
+    breathingPattern = models.CharField(choices=(('normal','normal'),('biots','biots'),('kussmaul','kussmaul'),('cheynestokes','cheynestokes'),('idontknow','idontknow')),max_length=20)
     hasChills = models.BooleanField(null=True)
     isFeelingWeak = models.BooleanField(null=True)
     hasBodyAches = models.BooleanField(null=True)

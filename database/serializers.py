@@ -6,7 +6,7 @@ from .models import DailyData, EntryData
 
 
 class PatientSerializer(serializers.ModelSerializer):
-    patient_id = serializers.UUIDField(format='hex')
+    patientId = serializers.UUIDField(format='hex')
     class Meta:
         model = models.CustomUser
         fields = ['email','patientId','zipCode','numberOfFlatmates',]
