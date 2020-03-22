@@ -2,7 +2,7 @@ aniso8601==7.0.0
 asgiref==3.2.5
 bson==0.5.8
 dataclasses==0.7
-Django==2.1.1
+Django==2.2.10
 django-expiring-token==1.0.2
 djangorestframework==3.11.0
 graphene==2.1.8
