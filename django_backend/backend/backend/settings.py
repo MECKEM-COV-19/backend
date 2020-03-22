@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'django_expiring_token',
+    'graphene_django',
 ]
 
 REST_FRAMEWORK = {
@@ -51,6 +52,10 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated', )
+}
+
+GRAPHENE = {
+    'SCHEMA': 'api.schema.schema' # Where your Graphene schema lives
 }
 
 EXPIRING_TOKEN_DURATION=timedelta(hours=1)
