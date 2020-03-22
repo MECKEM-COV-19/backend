@@ -9,12 +9,12 @@ class PatientSerializer(serializers.ModelSerializer):
     patient_id = serializers.UUIDField(format='hex')
     class Meta:
         model = models.CustomUser
-        fields = ['email','patient_id','zip_code','number_of_flatmates',]
+        fields = ['email','patientId','zipCode','numberOfFlatmates',]
 
 class DailyDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyData
-        exlude = ['patient']
+        exclude = ['patient']
 
 class EntryDataSerializer(serializers.ModelSerializer):
     class Meta:

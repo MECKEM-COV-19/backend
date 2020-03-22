@@ -4,6 +4,6 @@ import uuid
 
 
 class CustomUser(AbstractUser):
-    patient_id = models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
-    zip_code = models.CharField(max_length=10,null=True)
-    number_of_flatmates = models.IntegerField(null=True)
+    patientId = models.UUIDField(primary_key=True, default=uuid.uuid4,editable=False)
+    zipCode = models.CharField(max_length=10,null=True)
+    numberOfFlatmates = models.IntegerField(null=True)
