@@ -8,7 +8,7 @@ from database.models import EntryData, DailyData
 class PatientType(DjangoObjectType):
     class Meta:
         model = CustomUser
-        
+
 class EntryDataType(DjangoObjectType):
     class Meta:
         model = EntryData
@@ -18,11 +18,15 @@ class DailyDataType(DjangoObjectType):
         model = DailyData
 
 class Query(graphene.ObjectType):
-    users = graphene.List(Patient)
-    dailyDataForPatient = graphene.List(DailyData)
+    users = graphene.List(PatientType)
+    dailyDataForPatient = graphene.List(DailyDataType)
 
-    def resolve_dailyDataForPatient(self,info)
-        patient = CustomUser.objects.filter(patientID=info)
+
+    def resolve_dailyDataForPatient(self,info, **kwargs)
+        id= kwargs.get('patientId')
+        patient = get_object_or_404(CustomUser,patientId=id)
+        dailydata = DailyData.objects.filter(patient=patient)
+        return dailydata
 
     def resolve_users(self, info):
         return CustomUser.objects.all()
