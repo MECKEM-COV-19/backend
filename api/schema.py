@@ -43,6 +43,7 @@ class Query(graphene.ObjectType):
 
     def resolve_patientsWithFever(self,info, **kwargs):
         temp = kwargs.get('temperature')
+        info="hallo123"
         patients = []
         daily = DailyData.objects.filter(temperature__gte=temp)
         for data in daily:
@@ -50,7 +51,8 @@ class Query(graphene.ObjectType):
         return patients
     def resolve_patientsDataOverTime(self, info , **kwargs):
         time = kwargs.get('time')
-        
+
+
 
     def resolve_users(self, info):
         return CustomUser.objects.all() 
