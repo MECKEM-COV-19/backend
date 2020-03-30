@@ -9,7 +9,8 @@
             "command": "${config:python.pythonPath}",
             "args": [
                 "manage.py",
-                "migrate"
+                "migrate",
+                "--run-syncdb"
             ],
             "problemMatcher": [],
             "group": "build"
