@@ -15,6 +15,9 @@ python manage.py runserver
 
 ```
 
+## macOS
+
+On macOS, make sure that `postgresql` is installed. You can install it via brew with the following command. `brew install postgresql`
 
 ## APIs  
 url : __/database/patient-data__
