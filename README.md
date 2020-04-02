@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 
 ### Run
-To start the `Postgres` database you have to run `docker-compose up`.
+To start the `Mongodb` database you have to run `docker-compose up`.
 
 To start the python application start:
 ```
@@ -30,9 +30,7 @@ python manage.py runserver
 ```
 
 ### Debug Database
-The docker-compose file also includes a database viewer called Adminer to easily query and change the database. Go to `localhost:8080` and login.
-
-![Adminer Login Example](https://github.com/MECKEM-COV-19/backend/blob/master/docs/adminer_login.png "Adminer Login Example")
+The docker-compose file also includes a database viewer called Mongo Express to easily query and change the database. Go to `localhost:8081` and login.
 
 ## Deployment
 
