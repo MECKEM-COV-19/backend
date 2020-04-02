@@ -100,19 +100,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'meckem19',
-        'USER': 'meckem19user',
-        'PASSWORD': 'covid',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
-'''
-
 if 'RDS_HOSTNAME' in os.environ:
     DATABASES = {
         'default': {
@@ -127,19 +114,15 @@ if 'RDS_HOSTNAME' in os.environ:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'cov19',
+            'USER': 'postgres',
+            'PASSWORD': 'example',
+            'HOST': 'localhost',
+            'PORT': '5432',
         }
     }
 
-'''
-DATABASES = {
-   'default': {
-      'ENGINE': 'djongo',
-      'NAME': 'meckem-19-db-1',
-   }
-}
-'''
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
